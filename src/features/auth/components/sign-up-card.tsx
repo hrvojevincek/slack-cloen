@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,13 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { SignInMethodDivider } from "@/components/ui/convex-separator";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { TriangleAlert } from "lucide-react";
+import React, { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SignInFlow } from "./types";
-import { TriangleAlert } from "lucide-react";
-import { useAuthActions } from "@convex-dev/auth/react";
 
 interface SignUpCardProps {
   setState: (state: SignInFlow) => void;
@@ -24,6 +24,7 @@ interface SignUpCardProps {
 const SignUpCard = ({ setState }: SignUpCardProps) => {
   const { signIn } = useAuthActions();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,7 +38,7 @@ const SignUpCard = ({ setState }: SignUpCardProps) => {
       return;
     }
     setPending(true);
-    signIn("password", { email, password, flow: "signUp" })
+    signIn("password", { name, email, password, flow: "signUp" })
       .catch(() => {
         setError("Something went wrong");
       })
@@ -67,6 +68,16 @@ const SignUpCard = ({ setState }: SignUpCardProps) => {
         <form onSubmit={onPasswordSignUp} className="space-y-2.5">
           <Input
             disabled={pending}
+            placeholder="Full Name"
+            type="text"
+            minLength={3}
+            maxLength={20}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <Input
+            disabled={pending}
             placeholder="Email"
             type="email"
             value={email}
@@ -93,7 +104,7 @@ const SignUpCard = ({ setState }: SignUpCardProps) => {
             Continue
           </Button>
         </form>
-        <Separator />
+        <SignInMethodDivider />
         <div className="flex flex-col gap-y-2.5">
           <Button
             variant="outline"

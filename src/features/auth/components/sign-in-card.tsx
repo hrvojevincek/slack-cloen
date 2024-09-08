@@ -1,5 +1,4 @@
 "use client";
-import { useAuthActions } from "@convex-dev/auth/react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,13 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { SignInMethodDivider } from "@/components/ui/convex-separator";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { TriangleAlert } from "lucide-react";
+import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SignInFlow } from "./types";
-import { useState } from "react";
-import { TriangleAlert } from "lucide-react";
 
 interface SignInCardProps {
   setState: (state: SignInFlow) => void;
@@ -78,7 +78,8 @@ const SignInCard = ({ setState }: SignInCardProps) => {
             Continue
           </Button>
         </form>
-        <Separator />
+
+        <SignInMethodDivider />
         <div className="flex flex-col gap-y-2.5">
           <Button
             variant="outline"
