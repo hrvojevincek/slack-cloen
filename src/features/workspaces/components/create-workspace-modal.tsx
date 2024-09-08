@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
-import { useCreateWorkspace } from "../api/user-create-workspace";
+import { useCreateWorkspace } from "../api/use-create-workspace";
 import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal";
 import { useState } from "react";
 

@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { JotaiProvider } from "@/components/jotai-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,9 +35,11 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ConvexClientProvider>
-            <Modals />
-            <Toaster />
-            {children}
+            <JotaiProvider>
+              <Modals />
+              <Toaster />
+              {children}
+            </JotaiProvider>
           </ConvexClientProvider>
         </body>
       </html>
