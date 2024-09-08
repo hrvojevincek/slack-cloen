@@ -8,7 +8,7 @@ import React from "react";
 
 const Toolbar = () => {
   const workspaceId = useWorkspaceId();
-  const { data } = useGetWorkspace(workspaceId);
+  const { data, isLoading } = useGetWorkspace(workspaceId);
 
   return (
     <nav className="bg-[#481349] flex items-center justify-between h-10 p-1.5 w-full">
@@ -19,7 +19,9 @@ const Toolbar = () => {
           size="sm"
         >
           <SearchIcon className="size-4 text-white mr-2" />
-          <span className="text-white text-sm">Search {data?.name}</span>
+          <span className="text-white text-sm">
+            {isLoading ? "Loading..." : `Search ${data?.name}`}
+          </span>
         </Button>
       </div>
       <div className="ml-auto flex-1 items-center justify-end">
