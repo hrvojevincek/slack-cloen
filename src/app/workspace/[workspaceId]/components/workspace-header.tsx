@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Hint } from "@/components/ui/hint";
 import { ChevronDown, ListFilter, SquarePen } from "lucide-react";
-import { Doc } from "../../../../convex/_generated/dataModel";
-import PreferencesModal from "./preferences-modal";
+import { Doc } from "../../../../../convex/_generated/dataModel";
+import PreferencesModal from "./../components/preferences-modal";
 import { useState } from "react";
 
 interface WorkspaceHeaderProps {

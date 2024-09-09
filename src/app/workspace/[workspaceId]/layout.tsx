@@ -2,13 +2,13 @@
 
 import React from "react";
 import Toolbar from "./toolbar";
-import Sidebar from "./sidebar";
+import Sidebar from "./components/sidebar";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import WorkspaceSidebar from "./workspace-sidebar";
+import WorkspaceSidebar from "./components/workspace-sidebar";
 
 const WorkspaceIdLayout = ({ children }: { children: React.ReactNode }) => {
   return (
