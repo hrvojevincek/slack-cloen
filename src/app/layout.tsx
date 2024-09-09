@@ -1,4 +1,4 @@
-import { ConvexClientProvider } from "@/components/ui/convex-client-provider";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { Modals } from "@/components/ui/modals";
 import { Toaster } from "sonner";
