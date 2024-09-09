@@ -12,10 +12,13 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useWorkspaceId } from "@/hooks/use-workspace";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const CreateChannelModal = () => {
   const [open, setOpen] = useCreateChannelModal();
   const [name, setName] = useState("");
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //* replace all white space with - and make it lowercase
@@ -37,9 +40,13 @@ const CreateChannelModal = () => {
     mutate(
       { name, workspaceId },
       {
-        onSuccess: (data) => {
-          //TODO: redirect to the channel
+        onSuccess: (id) => {
+          router.push(`/workspace/${workspaceId}/channel/${id}`);
+          toast.success("Channel created successfully");
           handleClose();
+        },
+        onError: () => {
+          toast.error("Failed to create channel");
         },
       }
     );

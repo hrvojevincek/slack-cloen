@@ -43,11 +43,13 @@ const SidebarItem = ({
       size="sm"
       className={cn(sidebarItemVariants({ variant }))}
     >
-      <div className="flex items-center gap-1">
-        <Link href={`/workspace/${workspaceId}/channel/${id}`} />
+      <Link
+        href={`/workspace/${workspaceId}/channel/${id}`}
+        className="flex items-center gap-1"
+      >
         <Icon className="size-3.5 mr-1 shrink-0" />
         <span className="text-sm truncate">{label}</span>
-      </div>
+      </Link>
     </Button>
   );
 };

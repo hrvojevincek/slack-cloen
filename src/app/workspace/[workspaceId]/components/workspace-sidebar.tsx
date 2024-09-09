@@ -1,8 +1,10 @@
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useWorkspaceId } from "@/hooks/use-workspace";
-import { useGetChannels } from "@/features/channels/use-get-channels";
 import { useGetMembers } from "@/features/members/api/use-get-members";
+import { useChannelId } from "@/hooks/use-channel-id";
+import { useGetChannels } from "@/features/channels/api/use-get-channels";
+import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 
 import {
   AlertTriangle,
@@ -11,13 +13,10 @@ import {
   MessageSquareText,
   SendHorizonal,
 } from "lucide-react";
-import React from "react";
-import WorkspaceHeader from "./workspace-header";
 import SidebarItem from "./sidebar-item";
-import WorkspaceSection from "./workspace-section";
 import UserItem from "./user-item";
-import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
-
+import WorkspaceHeader from "./workspace-header";
+import WorkspaceSection from "./workspace-section";
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
 
@@ -37,6 +36,8 @@ const WorkspaceSidebar = () => {
   const { data: members, isLoading: isMembersLoading } = useGetMembers({
     workspaceId,
   });
+
+  const channelId = useChannelId();
 
   if (isWorkspaceLoading || memberLoading || isMembersLoading) {
     return (
@@ -76,6 +77,7 @@ const WorkspaceSidebar = () => {
             label={item.name}
             icon={HashIcon}
             id={item._id}
+            variant={channelId === item._id ? "active" : "default"}
           />
         ))}
       </WorkspaceSection>
