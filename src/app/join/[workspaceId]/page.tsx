@@ -11,12 +11,23 @@ import { useGetWorkspaceInfo } from "@/features/workspaces/api/use-get-workspace
 import { useJoinWorkspace } from "@/features/workspaces/api/use-join-workspace";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useEffect, useMemo } from "react";
 
 const JoinPage = () => {
   const workspaceId = useWorkspaceId();
   const router = useRouter();
   const { data, isLoading } = useGetWorkspaceInfo(workspaceId);
   const { mutate, isPending } = useJoinWorkspace();
+
+  const isMember = useMemo(() => {
+    return data?.isMember;
+  }, [data?.isMember]);
+
+  useEffect(() => {
+    if (isMember) {
+      router.push(`/workspace/${workspaceId}`);
+    }
+  }, [isMember, router, workspaceId]);
 
   const handleComplete = (value: string) => {
     mutate(

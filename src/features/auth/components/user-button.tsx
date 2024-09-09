@@ -21,6 +21,11 @@ export const UserButton = () => {
     return null;
   }
 
+  const handleSignOut = async () => {
+    await signOut();
+    window.location.href = "/";
+  };
+
   const { image, name } = data;
 
   const avatarFallback = name!.charAt(0).toUpperCase();
@@ -36,7 +41,10 @@ export const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center" side="right" className="w-60">
-        <DropdownMenuItem onClick={signOut} className="h-10 cursor-pointer">
+        <DropdownMenuItem
+          onClick={handleSignOut}
+          className="h-10 cursor-pointer"
+        >
           <LogOut className="size-4 mr-2" />
           Logout
         </DropdownMenuItem>

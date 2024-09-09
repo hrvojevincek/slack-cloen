@@ -4,11 +4,18 @@ import { Button } from "@/components/ui/button";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useWorkspaceId } from "@/hooks/use-workspace";
 import { Info, SearchIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Toolbar = () => {
   const workspaceId = useWorkspaceId();
   const { data, isLoading } = useGetWorkspace(workspaceId);
+  // const [searchPlaceholder, setSearchPlaceholder] = useState("Loading...");
+
+  // useEffect(() => {
+  //   if (!isLoading && data) {
+  //     setSearchPlaceholder(`Search ${data.name}`);
+  //   }
+  // }, [isLoading, data]);
 
   return (
     <nav className="bg-[#481349] flex items-center justify-between h-10 p-1.5 w-full">
@@ -22,6 +29,7 @@ const Toolbar = () => {
           <span className="text-white text-sm">
             {isLoading ? "Loading..." : `Search ${data?.name}`}
           </span>
+          {/* <span className="text-white text-sm">{searchPlaceholder}</span> */}
         </Button>
       </div>
       <div className="ml-auto flex-1 items-center justify-end">
