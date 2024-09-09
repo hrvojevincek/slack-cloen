@@ -73,6 +73,7 @@ const WorkspaceSwitcher = () => {
           <div className="size-9 relative overflow-hidden bg-[#F2F2F2] rounded-md flex items-center justify-center mr-2 text-slate-800 font-semibold text-xl">
             <Plus />
           </div>
+          <p className="truncate">Add Workspace</p>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

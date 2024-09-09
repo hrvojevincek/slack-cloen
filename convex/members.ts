@@ -48,8 +48,8 @@ export const get = query({
           user,
         });
       }
-      return members;
     }
+    return members;
   },
 });
 
