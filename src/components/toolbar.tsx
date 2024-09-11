@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { MessageSquareText, Pencil, Smile, Trash } from "lucide-react";
 import Hint from "./ui/hint";
 import EmojiPopover from "./emoji-popover";
+import { Id } from "../../convex/_generated/dataModel";
 
 interface ToolbarProps {
   isAuthor: boolean;
@@ -34,7 +35,7 @@ const Toolbar = ({
             variant="ghost"
             size="iconSm"
             disabled={isPending}
-            onClick={handleEdit}
+            // onClick={handleEdit}
           >
             <Smile className="size-4" />
           </Button>
@@ -45,7 +46,7 @@ const Toolbar = ({
               variant="ghost"
               size="iconSm"
               disabled={isPending}
-              onClick={handleEdit}
+              onClick={handleThread}
             >
               <MessageSquareText className="size-4" />
             </Button>
@@ -70,7 +71,7 @@ const Toolbar = ({
                 variant="ghost"
                 size="iconSm"
                 disabled={isPending}
-                onClick={handleEdit}
+                onClick={handleDelete}
               >
                 <Trash className="size-4" />
               </Button>

@@ -39,7 +39,7 @@ const ChatInput = ({ placeholder }: ChatInputProps) => {
     image,
   }: {
     body: string;
-    image: File | null;
+    image: File | null | undefined;
   }) => {
     try {
       setIsPending(true);
@@ -91,7 +91,7 @@ const ChatInput = ({ placeholder }: ChatInputProps) => {
       <Editor
         theme="snow"
         varient="create"
-        onSubmit={handleSubmit}
+        onSubmit={({ body, image }) => handleSubmit({ body, image })}
         disabled={isPending}
         innerRef={editorRef}
         placeholder={placeholder}

@@ -18,13 +18,13 @@ import { Delta, Op } from "quill/core";
 import "quill/dist/quill.snow.css";
 import Image from "next/image";
 
-type EditorValue = {
-  image: File | null;
+export type EditorValue = {
+  image?: File | null;
   body: string;
 };
 
 interface EditorProps {
-  onSubmit: (value: EditorValue) => void;
+  onSubmit: ({ body, image }: EditorValue) => void;
   onCancel?: () => void;
   placeholder?: string;
   defaultValue?: Delta | Op[];
