@@ -16,7 +16,7 @@ import data from "@emoji-mart/data";
 interface EmojiPopoverProps {
   children: React.ReactNode;
   hint?: string;
-  onEmojiSelect: (emoji: string) => void;
+  onEmojiSelect: (emoji: any) => void;
 }
 
 const EmojiPopover = ({
@@ -47,7 +47,7 @@ const EmojiPopover = ({
           <PopoverTrigger asChild>
             <TooltipTrigger asChild>{children}</TooltipTrigger>
           </PopoverTrigger>
-          <TooltipContent className="text-white border-white/5">
+          <TooltipContent className="text-white border-white/5 z-50">
             <p className="text-xs font-medium">{hint}</p>
           </TooltipContent>
         </Tooltip>

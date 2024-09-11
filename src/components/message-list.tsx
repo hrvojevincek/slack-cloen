@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
 import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
 import Message from "./message";
+import ChannelHero from "./channel-hero";
+import { Id } from "../../convex/_generated/dataModel";
+import { useWorkspaceId } from "@/hooks/use-workspace";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 
 interface MessageListProps {
   variant?: "channel" | "thread" | "conversation";
@@ -35,6 +39,10 @@ const MessageList = ({
   canLoadMore,
   data,
 }: MessageListProps) => {
+  const [editingId, setEditingId] = useState<Id<"messages"> | null>(null);
+  const workspaceId = useWorkspaceId();
+  const { data: currentMember } = useCurrentMember({ workspaceId });
+
   // * group them all by dates
   const groupedMessages = data?.reduce(
     (groups, message) => {
@@ -80,16 +88,16 @@ const MessageList = ({
                 memberId={message.memberId}
                 authorImage={message.user.image}
                 authorName={message.user.name}
-                isAuthor={false}
+                isAuthor={currentMember?._id === message.member._id}
                 reactions={message.reactions}
                 body={message.body}
                 image={message.image}
                 updatedAt={message.updatedAt}
                 createdAt={message._creationTime}
-                isEditing={false}
-                setEditingId={() => {}}
-                isCompact={isCompact}
-                hideThreadButton={false}
+                isEditing={editingId === message._id}
+                setEditingId={setEditingId}
+                isCompact={false}
+                hideThreadButton={variant === "thread"}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
                 threadTimestamp={message.threadTimestamp}
@@ -98,7 +106,9 @@ const MessageList = ({
           })}
         </div>
       ))}
-      {variant === "channel" && channelName && channelCreationTime}
+      {variant === "channel" && channelName && channelCreationTime && (
+        <ChannelHero name={channelName} creationTime={channelCreationTime} />
+      )}
     </div>
   );
 };
