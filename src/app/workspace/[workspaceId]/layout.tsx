@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Toolbar from "./toolbar";
+import Toolbar from "./components/toolbar";
 import Sidebar from "./components/sidebar";
 import {
   ResizableHandle,

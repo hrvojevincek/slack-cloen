@@ -31,6 +31,7 @@ interface EditorProps {
   varient: "create" | "update";
   disabled?: boolean;
   innerRef?: MutableRefObject<Quill | null>;
+  theme?: string;
 }
 
 const Editor = ({
@@ -41,6 +42,7 @@ const Editor = ({
   innerRef,
   onSubmit,
   onCancel,
+  theme = "snow",
 }: EditorProps) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
@@ -70,7 +72,7 @@ const Editor = ({
     );
 
     const options: QuillOptions = {
-      theme: "snow",
+      theme: theme,
       placeholder: placeholderRef.current,
       modules: {
         toolbar: [
@@ -132,7 +134,7 @@ const Editor = ({
         innerRef.current = null;
       }
     };
-  }, [innerRef]);
+  }, [innerRef, theme]);
 
   //TODO:come back to this and double check
   // const isEmpty = text.replace(/<(.|\n)*?>/g, "").length === 0;
@@ -163,7 +165,12 @@ const Editor = ({
         className="hidden"
       />
 
-      <div className="flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white">
+      <div
+        className={cn(
+          "flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white",
+          disabled && "opacity-50"
+        )}
+      >
         <div className="h-full ql-container" ref={containerRef} />
         {!!image && (
           <div className="p-2">

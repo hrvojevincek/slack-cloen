@@ -1,11 +1,14 @@
-import { ConvexClientProvider } from "@/components/convex-client-provider";
-import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
-import { Modals } from "@/components/ui/modals";
-import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 import { JotaiProvider } from "@/components/jotai-provider";
+import { Modals } from "@/components/ui/modals";
+import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import { Toaster } from "sonner";
+
+import "quill/dist/quill.snow.css";
+import "./globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

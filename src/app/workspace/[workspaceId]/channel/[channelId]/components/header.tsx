@@ -125,7 +125,7 @@ const Header = ({ title }: HeaderProps) => {
                 aria-label="Rename channel"
               >
                 <DialogHeader className="bg-white border-b p-4">
-                  <DialogTitle>Renamet his channel</DialogTitle>
+                  <DialogTitle>Rename this channel</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <Input
