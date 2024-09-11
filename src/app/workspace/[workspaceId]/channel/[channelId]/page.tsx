@@ -7,18 +7,17 @@ import React from "react";
 import Header from "./components/header";
 import ChatInput from "./components/chat-input";
 import { useGetMessages } from "@/features/messages/api/use-get-messages";
+import MessageList from "../../components/message-list";
 
 const ChannelIdPage = () => {
   const channelId = useChannelId();
 
-  const { results } = useGetMessages({ channelId });
+  const { results, status, loadMore } = useGetMessages({ channelId });
   const { data: channel, isLoading: channelLoading } = useGetChannel({
     channelId,
   });
 
-  console.log(results);
-
-  if (channelLoading)
+  if (channelLoading || status === "LoadingFirstPage")
     return (
       <div className="h-full flex-1 flex items-center justify-center">
         <Loader className="animate-spin size-6 text-muted-foreground" />
@@ -38,7 +37,15 @@ const ChannelIdPage = () => {
   return (
     <div className="flex flex-col h-full">
       <Header title={channel.name} />
-      <div className="flex-1 flex flex-col" />
+      <MessageList
+        variant="channel"
+        channelName={channel.name}
+        channelCreationTime={channel._creationTime}
+        loadMore={loadMore}
+        isLoading={status === "LoadingMore"}
+        canLoadMore={status === "CanLoadMore"}
+        data={results}
+      />
       <ChatInput placeholder={`Message #${channel.name}`} />
     </div>
   );

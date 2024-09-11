@@ -87,8 +87,9 @@ const Editor = ({
               handler: () => {
                 const text = quill.getText();
                 const addedImage = imageRef.current?.files?.[0] || null;
-                const isEmpty =
-                  !addedImage && text.replace(/<(.|\n)*?>/g, "").length === 0;
+                if (!text && !addedImage) {
+                  return false; // Prevent default behavior and do nothing
+                }
                 if (isEmpty) return;
                 const body = JSON.stringify(quill.getContents());
                 submitRef.current({ body, image: addedImage });
