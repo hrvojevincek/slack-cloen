@@ -39,7 +39,11 @@ const SignInCard = ({ setState }: SignInCardProps) => {
 
   const handleProviderSignIn = (value: "github" | "google") => {
     setPending(true);
-    signIn(value).finally(() => setPending(false));
+    signIn(value).finally(() => {
+      setTimeout(() => {
+        setPending(false);
+      }, 3000);
+    });
   };
 
   return (
