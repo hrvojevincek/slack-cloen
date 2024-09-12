@@ -6,6 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useWorkspaceId } from "@/hooks/use-workspace";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 
 interface UserItemProps {
   id: Id<"members">;
@@ -31,6 +32,8 @@ const userItemVariants = cva(
 const UserItem = ({ id, label = "Member", image, variant }: UserItemProps) => {
   const workspaceId = useWorkspaceId();
   const avatarFallback = label?.charAt(0).toUpperCase();
+  const { data: currentMember } = useCurrentMember({ workspaceId });
+  const isCurrentUser = currentMember?._id === id;
 
   return (
     <Button
@@ -38,7 +41,7 @@ const UserItem = ({ id, label = "Member", image, variant }: UserItemProps) => {
       className={cn(userItemVariants({ variant }))}
       asChild
     >
-      <Link href={`/workspace/${workspaceId}/members/${id}`}>
+      <Link href={`/workspace/${workspaceId}/member/${id}`}>
         <Avatar className="size-5 rounded-md mr-1">
           <AvatarImage src={image} className="rounded-md" />
           <AvatarFallback className="rounded-md bg-sky-500 text-white">
@@ -46,6 +49,9 @@ const UserItem = ({ id, label = "Member", image, variant }: UserItemProps) => {
           </AvatarFallback>
         </Avatar>
         <span className="truncate text-sm">{label}</span>
+        {isCurrentUser && (
+          <span className="truncate text-xs ml-1 text-[#f9edffcc]">(You)</span>
+        )}
       </Link>
     </Button>
   );

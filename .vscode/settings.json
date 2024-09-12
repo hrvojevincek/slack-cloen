@@ -1,1 +1,4 @@
-{}
+{
+  "editor.definitionLinkOpensInPeek": true,
+  "typescript.preferGoToSourceDefinition": false
+}
