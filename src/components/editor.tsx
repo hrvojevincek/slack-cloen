@@ -28,7 +28,7 @@ interface EditorProps {
   onCancel?: () => void;
   placeholder?: string;
   defaultValue?: Delta | Op[];
-  varient: "create" | "update";
+  varient?: "create" | "update";
   disabled?: boolean;
   innerRef?: MutableRefObject<Quill | null>;
   theme?: string;

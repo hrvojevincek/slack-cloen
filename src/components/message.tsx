@@ -12,6 +12,7 @@ import { Doc, Id } from "../../convex/_generated/dataModel";
 import Toolbar from "./toolbar";
 import { useToggleReaction } from "@/features/reactions/api/use-toggle-reactions";
 import Reactions from "./reactions";
+import { usePanel } from "@/hooks/use-panel";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -62,6 +63,7 @@ const Message = ({
   threadCount,
   threadImage,
 }: MessageProps) => {
+  const { parentMessageId, onOpenMessage, onClose } = usePanel();
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure you want to delete this message?",
     "This action cannot be undone."
@@ -113,9 +115,10 @@ const Message = ({
       { messageId: id },
       {
         onSuccess: () => {
-          console.log("okkkk");
-
           toast.success("Message deleted");
+          if (parentMessageId === id) {
+            onClose();
+          }
         },
         onError: () => {
           console.log("onotokok");
@@ -170,7 +173,7 @@ const Message = ({
               isAuthor={isAuthor}
               isPending={isPending}
               handleEdit={() => setEditingId(id)}
-              handleThread={() => {}}
+              handleThread={() => onOpenMessage(id)}
               handleDelete={() => handleDeleteMessage(id)}
               handleReaction={handleToggleReaction}
               hideThreadButton={hideThreadButton}
@@ -241,7 +244,7 @@ const Message = ({
             isAuthor={isAuthor}
             isPending={isPending}
             handleEdit={() => setEditingId(id)}
-            handleThread={() => {}}
+            handleThread={() => onOpenMessage(id)}
             handleDelete={() => handleDeleteMessage(id)}
             handleReaction={handleToggleReaction}
             hideThreadButton={hideThreadButton}
