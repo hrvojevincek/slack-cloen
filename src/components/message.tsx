@@ -1,18 +1,17 @@
-import React from "react";
-
-import dynamic from "next/dynamic";
-import { format, isToday, isYesterday } from "date-fns";
-import Hint from "@/components/ui/hint";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Thumbnail from "@/app/workspace/[workspaceId]/components/thumbnail";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Hint from "@/components/ui/hint";
+import { useDeleteMessage } from "@/features/messages/api/use-delete-message";
+import { useUpdateMessage } from "@/features/messages/api/use-update-message";
+import { useConfirm } from "@/hooks/use-confirm";
+import { cn } from "@/lib/utils";
+import { format, isToday, isYesterday } from "date-fns";
+import dynamic from "next/dynamic";
+import { toast } from "sonner";
 import { Doc, Id } from "../../convex/_generated/dataModel";
 import Toolbar from "./toolbar";
-import { useUpdateMessage } from "@/features/messages/api/use-update-message";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { EditorValue } from "@/components/editor";
-import { useDeleteMessage } from "@/features/messages/api/use-delete-message";
-import { useConfirm } from "@/hooks/use-confirm";
+import { useToggleReaction } from "@/features/reactions/api/use-toggle-reactions";
+import Reactions from "./reactions";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -74,7 +73,21 @@ const Message = ({
   const { mutate: deleteMessage, isPending: isDeletingMessage } =
     useDeleteMessage();
 
+  const { mutate: toggleReaction, isPending: isTogglingReaction } =
+    useToggleReaction();
+
   const isPending = isUpdatingMessage;
+
+  const handleToggleReaction = (value: string) => {
+    toggleReaction(
+      { value, messageId: id },
+      {
+        onError: () => {
+          toast.error("Failed to toggle reaction");
+        },
+      }
+    );
+  };
 
   const handleUpdateMessage = (body: string) => {
     updateMessage(
@@ -120,7 +133,9 @@ const Message = ({
         <div
           className={cn(
             "flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60 group relative",
-            isEditing && "bg-[#F2C74433] hover:bg-[#F2C74433]"
+            isEditing && "bg-[#F2C74433] hover:bg-[#F2C74433]",
+            isDeletingMessage &&
+              "bg-rose-500/50 transform scale-y-0 origin-bottom duration-200"
           )}
         >
           <div className="flex item-start gap-2">
@@ -146,6 +161,7 @@ const Message = ({
                 {updatedAt ? (
                   <span className="text-muted-foreground text-xs">Edited</span>
                 ) : null}
+                <Reactions data={reactions} onChange={handleToggleReaction} />
               </div>
             )}
           </div>
@@ -156,7 +172,7 @@ const Message = ({
               handleEdit={() => setEditingId(id)}
               handleThread={() => {}}
               handleDelete={() => handleDeleteMessage(id)}
-              handleReaction={() => {}}
+              handleReaction={handleToggleReaction}
               hideThreadButton={hideThreadButton}
             />
           )}
@@ -173,7 +189,9 @@ const Message = ({
       <div
         className={cn(
           "flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60 group relative",
-          isEditing && "bg-[#F2C74433] hover:bg-[#F2C74433]"
+          isEditing && "bg-[#F2C74433] hover:bg-[#F2C74433]",
+          isDeletingMessage &&
+            "bg-rose-500/50 transform scale-y-0 origin-bottom duration-200"
         )}
       >
         <div className="flex items-start gap-2">
@@ -214,6 +232,7 @@ const Message = ({
               {updatedAt ? (
                 <span className="text-muted-foreground text-xs">Edited</span>
               ) : null}
+              <Reactions data={reactions} onChange={handleToggleReaction} />
             </div>
           )}
         </div>
@@ -224,7 +243,7 @@ const Message = ({
             handleEdit={() => setEditingId(id)}
             handleThread={() => {}}
             handleDelete={() => handleDeleteMessage(id)}
-            handleReaction={() => {}}
+            handleReaction={handleToggleReaction}
             hideThreadButton={hideThreadButton}
           />
         )}

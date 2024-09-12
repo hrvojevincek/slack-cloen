@@ -1,9 +1,7 @@
-import React from "react";
-import { Button } from "./ui/button";
 import { MessageSquareText, Pencil, Smile, Trash } from "lucide-react";
-import Hint from "./ui/hint";
 import EmojiPopover from "./emoji-popover";
-import { Id } from "../../convex/_generated/dataModel";
+import { Button } from "./ui/button";
+import Hint from "./ui/hint";
 
 interface ToolbarProps {
   isAuthor: boolean;

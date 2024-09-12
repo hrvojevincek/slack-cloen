@@ -47,11 +47,10 @@ const schema = defineSchema({
       "conversationId",
     ]),
   reactions: defineTable({
-    workspaceId: v.id("workspaces"),
-    messageId: v.id("messages"),
-    memberId: v.id("members"),
-    reaction: v.string(),
     value: v.string(),
+    memberId: v.id("members"),
+    messageId: v.id("messages"),
+    workspaceId: v.id("workspaces"),
   })
     .index("by_workspace_id", ["workspaceId"])
     .index("by_message_id", ["messageId"])

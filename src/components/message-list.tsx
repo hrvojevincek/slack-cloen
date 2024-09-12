@@ -96,7 +96,7 @@ const MessageList = ({
                 createdAt={message._creationTime}
                 isEditing={editingId === message._id}
                 setEditingId={setEditingId}
-                isCompact={false}
+                isCompact={isCompact}
                 hideThreadButton={variant === "thread"}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}

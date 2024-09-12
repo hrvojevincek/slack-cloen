@@ -121,11 +121,12 @@ export const get = query({
               return null;
             }
 
-            const reactions = await populateReactions(ctx, message._id);
             const thread = await populateThread(ctx, message._id);
             const image = message.image
-              ? await ctx.storage.getUrl(message.image)
-              : undefined;
+            ? await ctx.storage.getUrl(message.image)
+            : undefined;
+            
+            const reactions = await populateReactions(ctx, message._id);
 
             const reactionsWithCount = reactions.map((reaction) => {
               return {
