@@ -33,7 +33,6 @@ const MemberIdPage = () => {
       </span>
     </div>;
   }
-  console.log(data);
 
   return <Conversation data={data} />;
 };
