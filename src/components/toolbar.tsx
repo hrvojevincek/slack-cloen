@@ -29,12 +29,7 @@ const Toolbar = ({
           hint="Add Reaction"
           onEmojiSelect={(emoji) => handleReaction(emoji.native)}
         >
-          <Button
-            variant="ghost"
-            size="iconSm"
-            disabled={isPending}
-            // onClick={handleEdit}
-          >
+          <Button variant="ghost" size="iconSm" disabled={isPending}>
             <Smile className="size-4" />
           </Button>
         </EmojiPopover>

@@ -6,6 +6,7 @@ import { Loader } from "lucide-react";
 import { Id } from "../../../../../../../convex/_generated/dataModel";
 import ChatInput from "./chat-input-convo";
 import HeaderConvo from "./header-convo";
+import { usePanel } from "@/hooks/use-panel";
 
 type ConversationData = {
   _creationTime: number;
@@ -16,6 +17,7 @@ type ConversationData = {
 } | null;
 
 const Conversation = ({ data }: { data: ConversationData }) => {
+  const { onOpenProfile } = usePanel();
   const memberId = useMemberId();
   const { data: member, isLoading: isMemberLoading } = useGetMember({
     memberId,
@@ -36,7 +38,7 @@ const Conversation = ({ data }: { data: ConversationData }) => {
       <HeaderConvo
         memberName={member?.user?.name}
         memberImage={member?.user?.image}
-        onClick={() => {}}
+        onClick={() => onOpenProfile(memberId)}
       />
       <MessageList
         data={results}
