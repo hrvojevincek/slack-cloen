@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button";
 import { FaChevronDown } from "react-icons/fa";
 
 interface HeaderConvoProps {
-  memberName: string | undefined;
-  memberImage: string | undefined;
+  memberName?: string;
+  memberImage?: string;
   onClick: () => void;
 }
 
 const HeaderConvo = ({
-  memberName,
+  memberName = "Member",
   memberImage,
   onClick,
 }: HeaderConvoProps) => {

@@ -44,7 +44,13 @@ interface MessageProps {
 }
 
 const formatFullTime = (date: Date) => {
-  return `${isToday(date) ? "Today" : isYesterday(date) ? "Yesterday" : format(date, "MMM d, yyyy")} at ${format(date, "h:mm:ss")}`;
+  return `${
+    isToday(date)
+      ? "Today"
+      : isYesterday(date)
+        ? "Yesterday"
+        : format(date, "MMM d, yyyy")
+  } at ${format(date, "h:mm:ss a")}`;
 };
 
 const Message = ({
@@ -152,16 +158,16 @@ const Message = ({
             {isEditing ? (
               <div className="w-full h-full">
                 <Editor
-                  onSubmit={({ body, image }) => handleUpdateMessage(body)}
+                  onSubmit={({ body }) => handleUpdateMessage(body)}
                   disabled={isPending}
                   defaultValue={JSON.parse(body)}
                   onCancel={() => setEditingId(null)}
-                  varient="update"
+                  variant="update"
                 />
               </div>
             ) : (
               <div className="flex flex-col w-full">
-                <Renderer value={body} />;
+                <Renderer value={body} />
                 <Thumbnail url={image} />
                 {updatedAt ? (
                   <span className="text-muted-foreground text-xs">Edited</span>
@@ -220,7 +226,7 @@ const Message = ({
                 disabled={isPending}
                 defaultValue={JSON.parse(body)}
                 onCancel={() => setEditingId(null)}
-                varient="update"
+                variant="update"
               />
             </div>
           ) : (
@@ -232,10 +238,10 @@ const Message = ({
                 >
                   {authorName}
                 </button>
-                <span>&nbsp;•&nbsp;</span>
+                <span>&nbsp;&nbsp;</span>
                 <Hint label={formatFullTime(new Date(createdAt))}>
                   <button className="text-muted-foreground text-xs hover:underline">
-                    {format(new Date(createdAt), "hh:mm")}
+                    {format(new Date(createdAt), "h:mm a")}
                   </button>
                 </Hint>
               </div>

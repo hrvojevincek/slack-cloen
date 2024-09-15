@@ -2,11 +2,11 @@ import MessageList from "@/components/message-list";
 import { useGetMember } from "@/features/members/api/use-get-member";
 import { useGetMessages } from "@/features/messages/api/use-get-messages";
 import { useMemberId } from "@/hooks/use-member-id";
+import { usePanel } from "@/hooks/use-panel";
 import { Loader } from "lucide-react";
 import { Id } from "../../../../../../../convex/_generated/dataModel";
-import ChatInput from "./chat-input-convo";
+import ChatInputConvo from "./chat-input-convo";
 import HeaderConvo from "./header-convo";
-import { usePanel } from "@/hooks/use-panel";
 
 type ConversationData = {
   _creationTime: number;
@@ -20,7 +20,7 @@ const Conversation = ({ data }: { data: ConversationData }) => {
   const { onOpenProfile } = usePanel();
   const memberId = useMemberId();
   const { data: member, isLoading: isMemberLoading } = useGetMember({
-    memberId,
+    id: memberId,
   });
 
   const { results, status, loadMore } = useGetMessages({
@@ -46,10 +46,15 @@ const Conversation = ({ data }: { data: ConversationData }) => {
         memberImage={member?.user?.image}
         memberName={member?.user?.name}
         loadMore={loadMore}
-        isLoading={status === "LoadingFirstPage" || status === "LoadingMore"}
+        isLoadingMore={
+          status === "LoadingFirstPage" || status === "LoadingMore"
+        }
         canLoadMore={status === "CanLoadMore"}
       />
-      <ChatInput placeholder="Write a message" conversationId={data?._id} />
+      <ChatInputConvo
+        placeholder="Write a message"
+        conversationId={data?._id}
+      />
     </div>
   );
 };

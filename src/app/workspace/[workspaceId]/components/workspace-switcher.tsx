@@ -1,18 +1,16 @@
 "use client";
 
-import React from "react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { useWorkspaceId } from "@/hooks/use-workspace";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
+import { useWorkspaceId } from "@/hooks/use-workspace";
 import { Loader, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 

@@ -75,13 +75,17 @@ export const current = query({
       return null;
     }
 
-    return member;
+    const user = await populateUser(ctx, member.userId);
+
+    const memberWithName = { ...member, memberName: user?.name };
+
+    return memberWithName;
   },
 });
 
 export const getById = query({
   args: {
-    memberId: v.id("members"),
+    id: v.id("members"),
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
@@ -90,7 +94,7 @@ export const getById = query({
       return null;
     }
 
-    const member = await ctx.db.get(args.memberId);
+    const member = await ctx.db.get(args.id);
 
     if (!member) {
       return null;
@@ -108,6 +112,10 @@ export const getById = query({
     }
 
     const user = await populateUser(ctx, member.userId);
+
+    if (!user) {
+      return null;
+    }
 
     return { ...member, user };
   },
@@ -177,8 +185,6 @@ export const remove = mutation({
     if (!currentMember) {
       throw new Error("Unauthorized");
     }
-
-    // !TODO: REMOVE MEMBER FROM ALL CHANNELS
 
     if (member.role === "admin") {
       throw new Error("Cannot remove admin");

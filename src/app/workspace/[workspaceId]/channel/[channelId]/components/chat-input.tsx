@@ -27,7 +27,9 @@ type CreateMessageValues = {
 const ChatInput = ({ placeholder }: ChatInputProps) => {
   const [editorKey, setEditorKey] = useState(0);
   const [isPending, setIsPending] = useState(false);
+
   const editorRef = useRef<Quill | null>(null);
+
   const workspaceId = useWorkspaceId();
   const channelId = useChannelId();
 
@@ -39,7 +41,7 @@ const ChatInput = ({ placeholder }: ChatInputProps) => {
     image,
   }: {
     body: string;
-    image: File | null | undefined;
+    image: File | null;
   }) => {
     try {
       setIsPending(true);
@@ -75,7 +77,6 @@ const ChatInput = ({ placeholder }: ChatInputProps) => {
 
         values.image = storageId;
       }
-
       await createMessage(values, { throwError: true });
       setEditorKey((prev) => prev + 1);
     } catch (error) {
@@ -90,8 +91,10 @@ const ChatInput = ({ placeholder }: ChatInputProps) => {
     <div className="px-5 w-full">
       <Editor
         theme="snow"
-        varient="create"
-        onSubmit={({ body, image }) => handleSubmit({ body, image })}
+        variant="create"
+        onSubmit={({ body, image }) =>
+          handleSubmit({ body, image: image || null })
+        }
         disabled={isPending}
         innerRef={editorRef}
         placeholder={placeholder}

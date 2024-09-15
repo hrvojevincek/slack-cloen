@@ -18,7 +18,10 @@ import UserItem from "./user-item";
 import WorkspaceHeader from "./workspace-header";
 import WorkspaceSection from "./workspace-section";
 import { useMemberId } from "@/hooks/use-member-id";
+import { usePathname } from "next/navigation";
+
 const WorkspaceSidebar = () => {
+  const pathname = usePathname();
   const workspaceId = useWorkspaceId();
 
   const [_open, setOpen] = useCreateChannelModal();
@@ -66,8 +69,19 @@ const WorkspaceSidebar = () => {
         isAdmin={member.role === "admin"}
       />
       <div className="flex flex-col px-2 mt-3">
-        <SidebarItem label="Threads" icon={MessageSquareText} id="threads" />
-        <SidebarItem label="Draft & Sent" icon={SendHorizonal} id="drafts" />
+        {/* TODO: REVISIT THIS */}
+        <SidebarItem
+          label="Threads"
+          icon={MessageSquareText}
+          id="threads"
+          variant={pathname.includes("thread") ? "active" : "default"}
+        />
+        <SidebarItem
+          label="Draft & Sent"
+          icon={SendHorizonal}
+          id="drafts"
+          variant={pathname.includes("drafts") ? "active" : "default"}
+        />
       </div>
       <WorkspaceSection
         label="Channels"
