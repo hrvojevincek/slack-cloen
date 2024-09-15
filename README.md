@@ -11,24 +11,13 @@ LIVE AT : [Slack Clone @ Vercel](https://slack-clone-iota-three.vercel.app/)
 
 This Slack Clone is a modern, real-time collaboration platform built with Next.js, Convex, and TypeScript. It offers a familiar interface for team communication, featuring workspaces, channels, and direct messaging capabilities.
 
-**Technical Highlights**
+## <a name="tech-stack">⚙ Tech Highlights</a>
 
 - Next.js Framework: Utilizes the power of Next.js for server-side rendering and optimal performance.
 - Convex Backend: Implements a robust backend using Convex for real-time data synchronization and scalable data management.
 - TypeScript: Enhances code quality and developer experience with strong typing throughout the project.
 - Tailwind CSS: Employs Tailwind for efficient and customizable styling.
 - Component-Based Architecture: Follows a modular approach with reusable React components for maintainability and scalability.
-
-## <a name="tech-stack">⚙️ Tech Stack</a>
-
-- Node.js
-- Next.js
-- TailwindCSS
-- TypeScript
-- Shadcn
-- Convex DB
-- Jotai state managment
-- Convex Auth
 
 ## <a name="features">🔋 Features</a>
 
