@@ -8,17 +8,18 @@ import { useWorkspaceId } from "@/hooks/use-workspace";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { Loader } from "lucide-react";
 import ConversationHero from "./conversation-hero";
+import ChannelHeroGeneral from "./channel-hero-general";
 
 interface MessageListProps {
-  variant?: "channel" | "thread" | "conversation";
   memberName?: string;
   memberImage?: string;
   channelName?: string;
   channelCreationTime?: number;
-  loadMore: () => void;
-  isLoading: boolean;
-  canLoadMore: boolean;
+  variant?: "channel" | "thread" | "conversation";
   data: GetMessagesReturnType | undefined;
+  loadMore: () => void;
+  isLoadingMore: boolean;
+  canLoadMore: boolean;
 }
 
 const formatDateLabel = (dateString: string) => {
@@ -37,7 +38,7 @@ const MessageList = ({
   channelName,
   channelCreationTime,
   loadMore,
-  isLoading: isLoadingMore,
+  isLoadingMore,
   canLoadMore,
   data,
 }: MessageListProps) => {
@@ -81,7 +82,7 @@ const MessageList = ({
               differenceInMinutes(
                 new Date(message._creationTime),
                 new Date(prevMessage._creationTime)
-              ) <= timeTreshold;
+              ) < timeTreshold;
 
             return (
               <Message
@@ -90,16 +91,16 @@ const MessageList = ({
                 memberId={message.memberId}
                 authorImage={message.user.image}
                 authorName={message.user.name}
-                isAuthor={currentMember?._id === message.member._id}
+                isAuthor={currentMember?._id === message.memberId}
+                isEditing={editingId === message._id}
+                isCompact={isCompact}
+                hideThreadButton={variant === "thread"}
                 reactions={message.reactions}
                 body={message.body}
                 image={message.image}
                 updatedAt={message.updatedAt}
                 createdAt={message._creationTime}
-                isEditing={editingId === message._id}
                 setEditingId={setEditingId}
-                isCompact={isCompact}
-                hideThreadButton={variant === "thread"}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
                 threadTimestamp={message.threadTimestamp}
@@ -138,9 +139,18 @@ const MessageList = ({
           </span>
         </div>
       )}
-      {variant === "channel" && channelName && channelCreationTime && (
-        <ChannelHero name={channelName} creationTime={channelCreationTime} />
-      )}
+
+      {variant === "channel" &&
+        channelName === "general" &&
+        channelCreationTime && <ChannelHeroGeneral name={channelName} />}
+
+      {variant === "channel" &&
+        channelName !== "general" &&
+        channelCreationTime &&
+        channelName && (
+          <ChannelHero name={channelName} creationTime={channelCreationTime} />
+        )}
+
       {variant === "conversation" && (
         <ConversationHero name={memberName} image={memberImage} />
       )}

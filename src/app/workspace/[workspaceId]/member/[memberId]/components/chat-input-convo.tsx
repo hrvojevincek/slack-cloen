@@ -12,7 +12,7 @@ const Editor = dynamic(() => import("@/components/editor"), {
   ssr: false,
 });
 
-interface ChatInputProps {
+interface ChatInputConvoProps {
   placeholder: string;
   conversationId: Id<"conversations"> | undefined;
 }
@@ -24,7 +24,10 @@ type CreateMessageValues = {
   image: Id<"_storage"> | undefined;
 };
 
-const ChatInput = ({ placeholder, conversationId }: ChatInputProps) => {
+const ChatInputConvo = ({
+  placeholder,
+  conversationId,
+}: ChatInputConvoProps) => {
   const [editorKey, setEditorKey] = useState(0);
   const [isPending, setIsPending] = useState(false);
   const editorRef = useRef<Quill | null>(null);
@@ -93,7 +96,7 @@ const ChatInput = ({ placeholder, conversationId }: ChatInputProps) => {
     <div className="px-5 w-full">
       <Editor
         theme="snow"
-        varient="create"
+        variant="create"
         onSubmit={({ body, image }) => handleSubmit({ body, image })}
         disabled={isPending}
         innerRef={editorRef}
@@ -104,4 +107,4 @@ const ChatInput = ({ placeholder, conversationId }: ChatInputProps) => {
   );
 };
 
-export default ChatInput;
+export default ChatInputConvo;

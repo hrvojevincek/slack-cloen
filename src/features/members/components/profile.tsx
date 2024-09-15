@@ -1,8 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useWorkspaceId } from "@/hooks/use-workspace";
+import { DropdownMenuRadioGroup } from "@radix-ui/react-dropdown-menu";
 import { Id } from "convex/_generated/dataModel";
 import {
   AlertTriangle,
@@ -11,14 +18,6 @@ import {
   MailIcon,
   X,
 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -26,7 +25,6 @@ import { useCurrentMember } from "../api/use-current-member";
 import { useGetMember } from "../api/use-get-member";
 import { useRemoveMember } from "../api/use-remove-member";
 import { useUpdateMember } from "../api/use-update-member";
-import { DropdownMenuRadioGroup } from "@radix-ui/react-dropdown-menu";
 
 interface ProfileProps {
   memberId: Id<"members">;
@@ -56,7 +54,7 @@ const Profile = ({ memberId, onClose }: ProfileProps) => {
     useCurrentMember({ workspaceId });
 
   const { data: member, isLoading: isLoadingMember } = useGetMember({
-    memberId,
+    id: memberId,
   });
 
   const { mutate: removeMember, isPending: isRemovingMember } =

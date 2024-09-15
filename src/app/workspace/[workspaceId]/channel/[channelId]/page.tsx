@@ -42,7 +42,7 @@ const ChannelIdPage = () => {
         channelName={channel.name}
         channelCreationTime={channel._creationTime}
         loadMore={loadMore}
-        isLoading={status === "LoadingMore"}
+        isLoadingMore={status === "LoadingMore"}
         canLoadMore={status === "CanLoadMore"}
         data={results}
       />

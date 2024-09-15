@@ -1,11 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface ConversationHeroProps {
-  name: string | undefined;
+  name?: string;
   image?: string;
 }
 
-const ConversationHero = ({ name, image }: ConversationHeroProps) => {
+const ConversationHero = ({
+  name = "Member",
+  image,
+}: ConversationHeroProps) => {
   const avatarFallback = name?.charAt(0).toUpperCase();
 
   return (
@@ -18,6 +21,7 @@ const ConversationHero = ({ name, image }: ConversationHeroProps) => {
         <p className="text-2xl font-bold">{name}</p>
       </div>
       <p className="font-normal text-slate-800 mb-4">
+        {/* TODO: fetch other user in conversation */}
         This channel is a conversation between you and <strong>{name}</strong>.
       </p>
     </div>

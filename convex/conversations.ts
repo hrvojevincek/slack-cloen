@@ -49,15 +49,15 @@ export const createOrGet = mutation({
       .unique();
 
     if (existingConversation) {
-      return existingConversation;
+      return existingConversation._id;
     }
 
-    const newConversation = await ctx.db.insert("conversations", {
+    const conversationId = await ctx.db.insert("conversations", {
       workspaceId: args.workspaceId,
       memberOneId: currentMember._id,
       memberTwoId: otherMember._id,
     });
 
-    return newConversation;
+    return conversationId;
   },
 });

@@ -51,8 +51,16 @@ const EmojiPopover = ({
             <p className="text-xs font-medium">{hint}</p>
           </TooltipContent>
         </Tooltip>
-        <PopoverContent className="p-0 w-ful border-none shadow-none bg-black">
-          <Picker data={data} onEmojiSelect={onSelect} />
+        <PopoverContent className="p-0 w-full border-none shadow-none bg-white">
+          <Picker
+            data={data}
+            onEmojiSelect={onSelect}
+            theme="light"
+            navPosition="top"
+            previewPosition="none"
+            searchPosition="sticky"
+            skinTonePosition="none"
+          />
         </PopoverContent>
       </Popover>
     </TooltipProvider>

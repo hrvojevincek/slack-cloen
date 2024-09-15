@@ -1,5 +1,5 @@
 import Quill from "quill";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface RendererProps {
   value: string;
@@ -25,8 +25,11 @@ const Renderer = ({ value }: RendererProps) => {
     const contents = JSON.parse(value);
     quill.setContents(contents);
 
-    // const isEmpty = quill.getText().replace(/<(.|\n|;)*?>/g, "").length === 0;
-    const isEmpty = quill.getText().replace(/[<>]/g, "").trim().length === 0;
+    const isEmpty =
+      quill
+        .getText()
+        .replace(/<(.|\n)*?>/g, "")
+        .trim().length === 0;
 
     setIsEmpty(isEmpty);
 

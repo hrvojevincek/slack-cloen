@@ -19,7 +19,7 @@ import "quill/dist/quill.snow.css";
 import Image from "next/image";
 
 export type EditorValue = {
-  image?: File | null;
+  image: File | null;
   body: string;
 };
 
@@ -28,14 +28,14 @@ interface EditorProps {
   onCancel?: () => void;
   placeholder?: string;
   defaultValue?: Delta | Op[];
-  varient?: "create" | "update";
+  variant?: "create" | "update";
   disabled?: boolean;
   innerRef?: MutableRefObject<Quill | null>;
   theme?: string;
 }
 
 const Editor = ({
-  varient = "create",
+  variant = "create",
   placeholder = "Write something...",
   defaultValue = [],
   disabled = false,
@@ -61,7 +61,7 @@ const Editor = ({
     placeholderRef.current = placeholder;
     defaultValueRef.current = defaultValue;
     disabledRef.current = disabled;
-  }, [onSubmit, placeholder, innerRef, defaultValue, disabled]);
+  });
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -87,19 +87,21 @@ const Editor = ({
               handler: () => {
                 const text = quill.getText();
                 const addedImage = imageRef.current?.files?.[0] || null;
-                if (!text && !addedImage) {
-                  return false; // Prevent default behavior and do nothing
-                }
+
+                const isEmpty =
+                  !addedImage &&
+                  text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
+
                 if (isEmpty) return;
+
                 const body = JSON.stringify(quill.getContents());
-                submitRef.current({ body, image: addedImage });
+                submitRef.current?.({ body, image: addedImage });
               },
             },
-            shiftEnter: {
+            shift_enter: {
               key: "Enter",
               shiftKey: true,
               handler: () => {
-                // create new line
                 quill.insertText(quill.getSelection()?.index || 0, "\n");
               },
             },
@@ -125,6 +127,7 @@ const Editor = ({
 
     return () => {
       quill.off(Quill.events.TEXT_CHANGE);
+
       if (container) {
         container.innerHTML = "";
       }
@@ -135,12 +138,7 @@ const Editor = ({
         innerRef.current = null;
       }
     };
-  }, [innerRef, theme]);
-
-  //TODO:come back to this and double check
-  // const isEmpty = text.replace(/<(.|\n)*?>/g, "").length === 0;
-  const cleanText = text.replace(/[<>]/g, "").replace(/\n/g, " ").trim();
-  const isEmpty = !image && cleanText.length === 0;
+  }, [theme, innerRef]);
 
   const toggleToolbar = () => {
     setIsToolbarVisible(!isToolbarVisible);
@@ -154,6 +152,8 @@ const Editor = ({
     const quill = quillRef.current;
     quill?.insertText(quill?.getSelection()?.index || 0, emoji.native);
   };
+
+  const isEmpty = !image && text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
   return (
     <div className="flex flex-col">
@@ -215,7 +215,7 @@ const Editor = ({
               <Smile className="size-4" />
             </Button>
           </EmojiPopover>
-          {varient === "create" && (
+          {variant === "create" && (
             <Hint label="Image">
               <Button
                 disabled={disabled}
@@ -227,10 +227,11 @@ const Editor = ({
               </Button>
             </Hint>
           )}
-          {varient === "update" && (
+          {/* //? UPDATE BUTTON */}
+          {variant === "update" && (
             <div className="ml-auto flex items-center gap-x-2">
               <Button
-                disabled={disabled}
+                disabled={disabled || isEmpty}
                 variant="outline"
                 size="sm"
                 onClick={onCancel}
@@ -252,7 +253,8 @@ const Editor = ({
               </Button>
             </div>
           )}
-          {varient === "create" && (
+          {/* //? create button */}
+          {variant === "create" && (
             <Button
               className={cn(
                 "ml-auto",
@@ -274,10 +276,10 @@ const Editor = ({
           )}
         </div>
       </div>
-      {varient === "create" && (
+      {variant === "create" && (
         <div
           className={cn(
-            "flex text-muted-foreground p-2 text-[10px] justify-end transition duration-300",
+            "flex text-muted-foreground p-2 text-[10px] justify-end opacity-0 transition duration-300",
             !isEmpty && "opacity-100"
           )}
         >

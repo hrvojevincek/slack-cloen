@@ -1,7 +1,6 @@
-import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { format, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { ChevronRight } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface ThreadBarProps {
   count?: number;
@@ -16,9 +15,9 @@ const ThreadBar = ({
   image,
   timestamp,
   onClick,
-  name,
+  name = "Member",
 }: ThreadBarProps) => {
-  if (!count && !timestamp) {
+  if ((!count && !timestamp) || !image) {
     return null;
   }
 

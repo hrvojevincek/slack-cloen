@@ -67,7 +67,7 @@ const Thread = ({ messageId, onClose }: ThreadProps) => {
     image,
   }: {
     body: string;
-    image?: File | null | undefined;
+    image?: File | null;
   }) => {
     try {
       setIsPending(true);

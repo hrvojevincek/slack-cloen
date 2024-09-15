@@ -17,7 +17,7 @@ export const useGenerateUploadUrl = () => {
   const [status, setStatus] = useState<
     "settled" | "pending" | "success" | "error" | null
   >(null);
-  
+
   const mutation = useMutation(api.upload.generateUploadUrl);
 
   const isPending = useMemo(() => status === "pending", [status]);

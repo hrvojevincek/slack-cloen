@@ -166,9 +166,7 @@ export const get = query({
             );
 
             const reactionsWithoutMemberIdProperty = dedupedReactions.map(
-              ({ memberIds, ...rest }) => {
-                return rest;
-              }
+              ({ memberId, ...rest }) => rest
             );
 
             return {
