@@ -2,7 +2,7 @@
 
 LIVE AT : [Slack Clone @ Vercel](https://slack-clone-iota-three.vercel.app/)
 
-. ⚙️ [Tech Stack](#tech-stack)
+. ⚙️ [Tech Highlights](#tech-stack)
 . 🔋 [Features](#features)
 . 🤸 [Quick Start](#quick-start)
 . 🕸️ [Snippets](#snippets)
